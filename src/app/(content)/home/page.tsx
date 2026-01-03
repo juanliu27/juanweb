@@ -83,16 +83,6 @@ export default function RealHome() {
     {/* 中间长图 */}
     <TarotDraw />
 
-    {/* 下方视频 */}
-    <video
-      src="/tarot/skeleton-golden-dance.mp4"
-      autoPlay
-      muted
-      loop
-      playsInline
-      className="w-full rounded-md object-cover"
-    />
-
   </div>
 </aside>
 
