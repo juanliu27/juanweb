@@ -28,12 +28,12 @@ export default function WritingPage() {
   return (
     <section className="mx-auto max-w-6xl px-6 pt-20 pb-24">
       <h1 className="text-4xl font-semibold mb-12">Writing</h1>
-
+      
       {/* 🪼 Jellyfish 弹窗：每个 session 只出现一次 */}
       {mounted && jellyfish === "unknown" && (
         <JellyfishModal onResolve={setJellyfish} />
       )}
-
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {writings.map((w) => {
           // jellyfish-only，但未通过
@@ -42,7 +42,7 @@ export default function WritingPage() {
               <WritingCard
                 key={w.slug}
                 title={w.title}
-                excerpt="This post is protected by jellyfish logic."
+                excerpt="This post is protected."
                 date={w.date}
                 tag={w.tag}
                 cover={w.cover}

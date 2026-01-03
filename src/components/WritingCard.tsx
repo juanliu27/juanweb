@@ -51,7 +51,7 @@ export default function WritingCard({
 
             {tag && <span>· {tag}</span>}
 
-            {locked && <span>· 🔒 Jellyfish-only</span>}
+            {locked && <span>· 🔒 ·</span>}
           </div>
         )}
 
