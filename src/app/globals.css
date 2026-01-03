@@ -1,26 +1,41 @@
 @import "tailwindcss";
-
+/* 明亮模式（默认） */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #cdedfb;      /* 浅蓝底 */
+  --foreground: #1b0b2b;      /* 深灰字 */
+
+  /* 主题色（明） */
+  --brand: #14554d;           /* 浅蓝 */
+  --brand-contrast: #1e97a9;  /* 对比/强调 */
 }
 
+/* 暗色模式（用 .dark 类切换） */
+.dark {
+  --background: #1e498a;      /* 深色底，便于对比 */
+  --foreground: #ededed;      /* 浅色字，保证可读性 */
+
+  /* 主题色（暗） */
+  --brand: #cdedfb;           /* 深蓝 */
+  --brand-contrast: #171717;  /* 浅蓝作为反差 */
+}
+
+/* 只保留一个 @theme（v4 注册到 Tailwind 的颜色/字体名） */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand: var(--brand);
+  --color-brand-contrast: var(--brand-contrast);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  /*font-family: Arial, Helvetica, sans-serif;*/
+}
+
+.text-body {
+  color: var(--foreground);
 }
