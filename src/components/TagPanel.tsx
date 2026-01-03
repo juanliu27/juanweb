@@ -1,18 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { tagGroups } from "@/app/data/tagConfig";
 import { projects } from "@/app/data/projects";
 
-export default function TagPanel() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const activeTag = searchParams.get("tag");
-
+export default function TagPanel({
+  activeTag,
+  onSelectTag,
+}: {
+  activeTag: string | null;
+  onSelectTag?: (tag: string) => void;
+}) {
   const [query, setQuery] = useState("");
 
-  // 1️⃣ 统计 tag 次数
+  // 统计 tag 次数（这部分完全 OK）
   const tagCount: Record<string, number> = {};
   projects.forEach((p) =>
     p.tags.forEach((t) => {
@@ -35,7 +36,6 @@ export default function TagPanel() {
 
       <div className="space-y-6">
         {tagGroups.map(({ group, tags }) => {
-          // 2️⃣ 过滤 + 按频次排序
           const visibleTags = tags
             .filter(matchesQuery)
             .sort((a, b) => (tagCount[b] ?? 0) - (tagCount[a] ?? 0));
@@ -54,11 +54,7 @@ export default function TagPanel() {
                   return (
                     <li key={tag}>
                       <button
-                        onClick={() =>
-                          router.push(
-                            `/projects?tag=${encodeURIComponent(tag)}`
-                          )
-                        }
+                        onClick={() => onSelectTag?.(tag)}
                         className={`text-sm flex justify-between w-full ${
                           isActive
                             ? "font-semibold text-neutral-900"

@@ -7,6 +7,12 @@ type Props = {
   }>;
 };
 
+export async function generateStaticParams() {
+  return writings.map((w) => ({
+    slug: w.slug,
+  }));
+}
+
 export default async function WritingDetailPage({ params }: Props) {
   const { slug } = await params;
 
