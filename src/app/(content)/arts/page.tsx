@@ -5,9 +5,9 @@ export default function ArtsPage() {
   return (
     <section className="w-full">
       <div className="max-w-3xl px-6 py-12">
-        <h1 className="text-2xl font-medium">Traces</h1>
+        <h1 className="text-2xl font-medium">Atlas</h1>
         <p className="mt-2 text-sm text-neutral-500">
-          The world is an open book.
+        <em>The Lion, the Witch and the Wardrobe</em>
         </p>
       </div>
 

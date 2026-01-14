@@ -39,3 +39,26 @@ body {
 .text-body {
   color: var(--foreground);
 }
+
+@font-face {
+  font-family: "AliceInWonderland";
+  src: url("/fonts/AliceInWonderland-z051.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "turboripped";
+  src: url("/fonts/TURBO ripped.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-alice {
+  font-family: "AliceInWonderland", serif;
+}
+.font-turbo {
+  font-family: 'turboripped', serif;
+}

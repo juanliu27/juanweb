@@ -8,7 +8,7 @@ const links = [
   { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/writing", label: "Writing" },
-  { href: "/arts", label: "Wardrobe" },
+  { href: "/arts", label: "Atlas" },
 ];
 
 export default function Sidebar() {
@@ -33,9 +33,9 @@ export default function Sidebar() {
             >
               Jingyuan Liu
             </Link>
-            <p className="mt-2 text-sm opacity-70 leading-relaxed">
-            <br />Data Science × Sociology<br /> <br />
-              AI Ethics · Privacy <br /> Platform Governance <br /> LLM <br /><br />
+            <p className="mt-2 text-[12px]  opacity-70 leading-relaxed">
+            <br />Data Science | Sociology<br /> <br />
+              AI Ethics · LLM <br /> Platform Governance <br /> Privacy  <br /><br />
             </p>
           </div>
         </div>
