@@ -10,6 +10,16 @@ export type Writing = {
 
 export const writings: Writing[] = [
   {
+    slug: "january",
+    title: "一月札记",
+    excerpt:
+      "一会再写",
+    date: "2026-1-13",
+    jellyfishOnly: false,
+    tag: 'MumbleBee',
+    cover: "/writing/january.png",
+  },
+  {
     slug: "to-the-east",
     title: "一路东行",
     excerpt:
