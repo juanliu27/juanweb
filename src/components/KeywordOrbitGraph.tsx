@@ -213,6 +213,6 @@ export default function KeywordOrbitGraph() {
  */
 function sharesPaper(a: KeywordNode, b: KeywordNode) {
   if (a === b) return true
-  const set = new Set(a.papers.map((p) => p.id))
-  return b.papers.some((p) => set.has(p.id))
+  const set = new Set(a.papers.map((p) => p.doi))
+  return b.papers.some((p) => set.has(p.doi))
 }
