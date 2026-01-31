@@ -11,14 +11,12 @@ export default function WithSidebarLayout({
       {/* 左侧 Sidebar：半透明实体 */}
       <aside
           className="
-            w-[300px]
-            self-start
-            sticky
-            top-0
-            h-screen
-            bg-[var(--brand)]/95
-            text-[var(--brand-contrast)]
-            border-r border-black/10
+            hidden md:flex
+            md:basis-1/5
+            sticky top-0 h-screen
+            z-20
+            shadow-[4px_0_24px_rgba(0,0,0,0.2)] 
+            border-r border-white/10
           "
         >
 
@@ -28,7 +26,7 @@ export default function WithSidebarLayout({
       {/* 右侧内容：半透明浮层 */}
       <main
         className="
-          flex-1
+          flex-1 md:basis-4/5
           min-h-screen
           bg-[var(--background)]/45
           backdrop-blur-[2px]

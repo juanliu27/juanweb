@@ -17,60 +17,81 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden md:block w-[300px] min-h-screen bg-background px-10 py-10">
-      <div className="flex flex-col justify-center px-10 py-10 w-full">
+    <aside className="hidden md:flex flex-col w-full h-full min-h-screen sticky top-0 
+    bg-white/20 dark:bg-black/20 backdrop-blur-2xl 
+    border-r border-white/10 
+    px-16 pt-16 pb-12">
 
-        {/* 顶部：身份区 */}
-        <div className="flex flex-col items-center md:items-start gap-4">
+      {/* 顶部：身份区 - 增加呼吸感和层级 */}
+      <div className="flex flex-col items-start gap-6 mb-5">
+        <div className="relative group">
+          {/* 头像背后的极简光晕 */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-full blur opacity-10 group-hover:opacity-30 transition duration-500"></div>
           <img
             src="/me.png"
-            alt="My portrait"
-            className="w-28 h-28 rounded-full object-cover border border-neutral-300 dark:border-neutral-700 shadow-sm"
+            alt="Portrait"
+            className="relative w-22 h-22 rounded-full object-cover border-1 border-white dark:border-neutral-800 shadow-md"
           />
+        </div>
 
-          <div className="text-center md:text-left">
-            <Link
-              href="/"
-              className="block text-[22px] font-semibold tracking-tight"
-            >
-              Jingyuan Liu
-            </Link>
-            <p className="mt-2 text-[12px]  opacity-70 leading-relaxed">
-            <br />Data Science | Sociology<br /> <br />
-              AI Ethics · LLM <br /> Platform Governance <br /> Privacy  <br /><br />
+        <div>
+          <Link
+            href="/"
+            className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 hover:text-teal-600 transition-colors"
+          >
+            Jingyuan Liu
+          </Link>
+          <div className="mt-3 space-y-1.5">
+            <p className="text-[16px] font-semibold text-teal-600 dark:text-teal-400">
+              Data Science | Sociology
+            </p>
+            <p className="text-[13px] text-neutral-500 dark:text-neutral-400 leading-relaxed font-medium">
+              AI Gorvenance · AI Ethics <br />
+              Large Language Model <br />
+              Privacy
             </p>
           </div>
         </div>
+      </div>
 
-        {/* 中部：导航 */}
-        <nav className="space-y-1">
-          {links.map((l) => {
-            const active =
-              pathname === l.href ||
-              (l.href !== "/" && pathname.startsWith(l.href));
+      {/* 中部：导航 */}
+      <nav className="space-y-2 mb-12">
+        {links.map((l) => {
+          const active =
+            pathname === l.href ||
+            (l.href !== "/" && pathname.startsWith(l.href));
 
-            return (
-              <Link
-                key={l.href}
-                href={l.href}
-                className={`
-                  block rounded-lg px-3 py-2 text-sm transition
-                  ${active
-                    ? "bg-[var(--brand-contrast)] text-[var(--brand)]"
-                    : "bg-transparent text-[var(--brand-contrast)] hover:bg-[var(--brand-contrast)] hover:text-[var(--brand)]"
-                  }
-                `}
-              >
+          return (
+            <Link
+              key={l.href}
+              href={l.href}
+              className={`
+                relative group flex items-center px-4 py-2 text-base font-medium rounded-xl transition-all duration-200
+                ${active
+                  ? "bg-teal-500/10 text-teal-700 dark:text-teal-400 shadow-[inset_0_0_0_1px_rgba(20,184,166,0.1)]"
+                  : "text-neutral-500 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/50 hover:text-neutral-900 dark:hover:text-neutral-200"
+                }
+              `}
+            >
+              {/* 选中时的左侧指示条 */}
+              {active && (
+                <span className="absolute left-0 w-1 h-5 bg-teal-500 rounded-r-full" />
+              )}
+              
+              <span className={`
+                transition-transform duration-200
+                ${active ? "translate-x-1" : "group-hover:translate-x-1"}
+              `}>
                 {l.label}
-              </Link>
-            );
-          })}
-        </nav>
+              </span>
+            </Link>
+          );
+        })}
+      </nav>
 
-        {/* 底部（可选） */}
-        <div className="pt-4 text-xs opacity-60">
-          © {new Date().getFullYear()}
-        </div>
+      {/* 底部：版权区 - 更精致的装饰 */}
+      <div className="mt-auto pt-8 border-t border-neutral-200/50 dark:border-neutral-800/50 text-[10px] text-neutral-400 tracking-widest uppercase font-medium">
+        © {new Date().getFullYear()} All Rights Reserved
       </div>
     </aside>
   );

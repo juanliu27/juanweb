@@ -1,7 +1,7 @@
 export default function AboutPage() {
   return (
     // 毛玻璃感和软阴影的容器
-    <section className="mx-auto max-w-5xl px-6 pt-20 pb-28">
+    <section className="mx-auto max-w-5xl px-1 pt-15 pb-15">
       <div className="bg-white/70 dark:bg-neutral-900/60 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-xl border border-white/20">
         
         {/* 标题：增加渐变色或更深的字重 */}
