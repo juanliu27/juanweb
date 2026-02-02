@@ -1,166 +1,180 @@
 export default function ExperiencePage() {
-    return (
-      <section className="mx-auto max-w-5xl px-6 pt-20 pb-28">
+  return (
+    <section className="mx-auto max-w-5xl px-6 pt-20 pb-28">
+      {/* 标题 */}
+      <h1 className="text-4xl font-semibold mb-16 tracking-tight">Experience</h1>
+
+      {/* 时间线主容器 */}
+      <div className="relative border-l border-neutral-200 dark:border-neutral-800 ml-4 pl-8 space-y-20">
         
-        {/* 标题 */}
-        <h1 className="text-4xl font-semibold mb-14">Experience</h1>
-  
-        <div className="space-y-6 leading-relaxed text-neutral-700 dark:text-[var(--foreground)]">
-  
-          {/* ================= JHA ================= */}
-          <article className="space-y-4">
-            <h2 className="text-2xl font-medium">
+        {/* ================= JHA ================= */}
+        <article className="relative /* 增加背景色和磨砂感 */
+  bg-white/50 dark:bg-black/40 
+  backdrop-blur-md 
+  /* 增加内边距让文字不贴边 */
+  p-6 md:p-8 
+  /* 圆角和极细边框增加精致感 */
+  rounded-3xl 
+  border border-white/30 dark:border-white/10 
+  shadow-sm">
+          {/* 时间线圆点 */}
+          <div className="absolute -left-[37px] top-1.5 w-4 h-4 rounded-full border-4 border-white dark:border-neutral-900 bg-teal-500 ring-4 ring-teal-500/20 shadow-sm" />
+
+          <div className="flex flex-col gap-1 mb-4">
+            <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
               Just Horizons Alliance (JHA)
             </h2>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+              <span className="font-semibold text-teal-600 dark:text-teal-400">Benchmark Research Assistant</span>
+              <span className="text-neutral-500 italic">June 2025 – January 2026 · Boston, MA</span>
+            </div>
+          </div>
 
-            <p className="italic text-sm text-neutral-500">
-              Benchmark Research Assistant · June 2025 – January 2026 · Boston, MA
-              <br />
-              AI Gorvernanve, AI benchmark, API
-            </p>
-  
-            <p>
-              At Just Horizons Alliance, I worked as a Benchmark Research Assistant on the
-              development of an ethics-oriented large language model evaluation framework,
-              the <strong>AI Ethics Index (AIEI)</strong>. The project addressed a core
-              limitation of existing benchmarks: ethical behavior is often omitted, obscuring value trade-offs, governance constraints. 
-              A hierarchical, tree-based benchmark architecture inspired by
-              HELM is being developed under the supervision of Professor Wesley Wildman to evaluate model behavior across dimensions such as ethical alignment,
-              transparency, fairness, safety, and environment, etc.
-            </p>
-  
-            <p>
-            I also built end-to-end evaluation pipelines integrating both <strong> prompt testing and document analysis </strong>. It is able to support both local open-source
-              models (e.g. LLaMA) and API-based models (e.g. Gemini), automating prompt
-              execution, response parsing, and score aggregation for scalable and
-              reproducible cross-model comparison.
-            </p>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {['AI Governance', 'AI Benchmark', 'API'].map(tag => (
+              <span key={tag} className="px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 rounded-md">
+                {tag}
+              </span>
+            ))}
+          </div>
 
+          <div className="space-y-4 text-neutral-700 dark:text-neutral-300">
+            <p>
+              Worked on the development of an ethics-oriented LLM evaluation framework, the <strong>AI Ethics Index (AIEI)</strong>, addressing limitations in existing benchmarks regarding ethical behavior and governance compliance, covering safety, model design, environment impact, fairness, transparency, etc. using a tree architecture.
+            </p>
+            <p>
+              Built end-to-end evaluation pipelines supporting both local (LLaMA) and API-based (Gemini) models, automating prompt testing and data analysis. See the following flow chart for detailed procedure. Additional temperature-tiered testing are executed to enhance the richness and adding robustness.
+            </p>
             <p className="mt-4">
             For additional analysis and existing reports regarding financial coercion and
               doxxing patterns,{" "}
               <a
                 href="/experience/aiei-benchmark"
-                className="underline underline-offset-4 hover:opacity-80"
+                className="w-full md:w-4/5 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm mix-blend-multiply dark:mix-blend-screen opacity-90 hover:opacity-100 transition-opacity"
               >
                 click here
               </a>.
             </p>
-
-            <div className="my-6">
+            <div className="pt-4">
                 <img
                     src="/experience/pipeline.png"
                     alt="Evaluation pipeline"
-                    className="w-3/4 rounded-lg border border-neutral-200"
+                    className="w-full md:w-4/5 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm"
                 />
             </div>
-          </article>
-  
-          {/* ================= CAS ================= */}
-          <article className="space-y-4">
-            <h2 className="text-2xl font-medium">
+          </div>
+        </article>
+
+        {/* ================= CAS ================= */}
+        <article className="relative /* 增加背景色和磨砂感 */
+  bg-white/50 dark:bg-black/40 
+  backdrop-blur-md 
+  /* 增加内边距让文字不贴边 */
+  p-6 md:p-8 
+  /* 圆角和极细边框增加精致感 */
+  rounded-3xl 
+  border border-white/30 dark:border-white/10 
+  shadow-sm">
+          <div className="absolute -left-[37px] top-1.5 w-4 h-4 rounded-full border-4 border-[var(--background)] bg-neutral-300 dark:bg-neutral-700" />
+          
+          <div className="flex flex-col gap-1 mb-4">
+            <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
               Institute of Automation, Chinese Academy of Sciences
             </h2>
-  
-            <p className="italic text-sm text-neutral-500">
-            NLP Research Assistant · September 2023 – March 2024 · Beijing, China
-            <br />
-            LLM finetuning, Prompt Engineering, 
-            <br />
-            Langchain, Information Retrieval, Natural Language Processing
-            </p>
-  
-            <p>
-            At the Institute of Automation, Chinese Academy of Sciences, I worked in a 
-            <strong> Multi-modal Biological Experiment Agent </strong> project, with a focus on natural language processing
-            and system integration. The system was designed to support both automated experiment execution
-            and knowledge-assisted searching in laboratory workflows.
-            </p>
-            <div className="flex flex-col md:flex-row gap-10 items-start"> 
-              <div className="md:w-2/3 space-y-6 leading-relaxed">
-                <p>
-                I developed an end-to-end <strong> Knowledge Base Question Answering </strong> system built on a large-scale corpus of
-                biological experiment protocols. Over 20,000 protocols were crawled from academic journal
-                websites using BeautifulSoup and converted into structured Markdown format to support efficient
-                retrieval. The answering system enables natural language querying of protocol procedures, step-specific guidance, and contextual
-                recommendations on experimental focus and execution details. It was integrated into a complete web-based user interface, enabling interactive
-                protocol querying, agent-driven command generation, and report creation within a unified workflow.
-                </p>
-                <p>
-                In parallel, I engineered a <strong> LangChain-based Protocol Generation Agent </strong> that translates upstream
-                computer vision outputs into structured robotic execution commands, effectively bridging visual
-                perception and physical laboratory action. To improve robustness and controllability, I designed
-                an action–task mapping dictionary to constrain model outputs and reduce hallucinations. Through
-                <strong> model fine-tuning, prompt engineering, few-shot learning, chain-of-thought prompting </strong>, and the
-                constrained mapping layer, the system achieved 98% execution stability and a 57% reduction in
-                end-to-end latency.
-                </p>
-                <p>
-                Beyond command generation, the agent is also capable of producing welly-structured, full-length
-                biological experiment reports, synthesizing experimental context, procedures, and outcomes.
-                </p>
-              
-              </div>
-            
-              <div className="md:w-1/3 shrink-0">
-                <img
-                  src="/experience/multimodal.png"
-                  alt="Multimodal Biological Experiment Agent System"
-                  className="w-full rounded-lg border border-neutral-200"
-                />
-                <p className="mt-2 text-sm text-neutral-500">
-                  Multi-modal biological experiment agent system (Protocol + command generation) (left)
-                  <br />
-                  & Protocol KBQA System (right).
-                </p>
-              </div>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+              <span className="font-semibold text-teal-600 dark:text-teal-400">NLP Research Assistant</span>
+              <span className="text-neutral-500 italic">Sept 2023 – March 2024 · Beijing, China</span>
             </div>
-          </article>
+          </div>
 
-          {/* ================= Snowball ================= */}
-          <article className="space-y-4">
-            <h2 className="text-2xl font-medium">Snowball</h2>
-  
-            <p className="italic text-sm text-neutral-500">
-              Big Data Development Intern · February 2023 – May 2023 · Beijing, China
-              <br />
-              SQL, Database, Sensitive Information, Testing, Data Warehouse
-            </p>
-  
-            <p>
-              At Snowball, I worked in the R&D department on data quality assurance and
-              warehouse optimization. </p>
-            <p>I extracted and analyzed data using SQL and conducted integrity testing on 10 data warehouse tables covering 68 sensitive fields. Through reviewing and modifying underlying table logic, I identified and corrected issues in four problematic tables.
-              <br />In addition, I analyzed table reuse and dependency patterns across the data warehouse. I reviewed 211 ODS tables and 681 downstream tables, identifying two unnecessary dependencies and more than one hundred instances of redundant logic.</p>
-          </article>
-  
-          {/* ================= Bianlifeng ================= */}
-          <article className="space-y-4">
-            <h2 className="text-2xl font-medium">
-              Bianlifeng Technology Co., Ltd.
-            </h2>
-  
-            <p className="italic text-sm text-neutral-500">
-              HRIS & Data Analytics Intern · June 2021 – September 2021 · Beijing, China
-              <br />
-              RPA, UIBOT, SQL, Visio, Data Warehouse
-            </p>
-  
-            <p>
-              I worked on automation and internal data workflows, developing RPA pipelines
-              and SQL-based reporting systems in Bianlifeng.
-            </p>
-            <p>I developed <strong> Robotic Process Automation (RPA) </strong> workflows using UIBOT to automate web data scraping, classification, and computation tasks. These workflows enabled the automatic generation of monthly reports and streamlined data entry processes, improving operational efficiency by approximately 95%. In one major project, the system automatically extracted and exported information for more than 8,400 employees from deployment database for the Uber project.
-            <br />
-            I conducted data analysis using SQL to extract information from the data warehouse and applied window functions to process and categorize employee work data. This work supported recurring monthly reporting needs for more than 10 departments over multiple reporting cycles.
-I configured and tested upstream and downstream workflows and deployed them to production environments. I contributed to nearly 30 process configurations and independently developed and launched multiple workflows, supporting the registration of more than 500 individual contractors within the organization.
-<br />
-To support documentation and communication, I created nearly 50 Visio process diagrams and uploaded them to internal systems. I also used Excel and PowerPoint to perform basic data processing and present analytical results to stakeholders.
-            </p>
-          </article>
-  
-        </div>
-      </section>
-    );
-  }
-  
+          <div className="flex flex-wrap gap-2 mb-6">
+            {['LLM Finetuning', 'Langchain', 'RAG', 'Prompt Engineering'].map(tag => (
+              <span key={tag} className="px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 rounded-md">
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="md:col-span-2 space-y-4 text-neutral-700 dark:text-neutral-300">
+
+              <p>Worked in a <strong> Multi-modal Biological Experiment Agent </strong> project, with a focus on <strong> natural language processing </strong> and system integration. The system was designed to support both automated experiment execution and knowledge-assisted searching in laboratory workflows</p>
+              <p>
+                Developed a <strong>Knowledge Base QA</strong> system with 20,000+ biological protocols using BeautifulSoup and Markdown for efficient retrieval. 
+                The answering system enables querying of protocol procedures, step-specific guidance, and contextual recommendations on experimental focus and execution details. It was integrated into a complete web-based user interface.
+              </p>
+              <p>
+                Engineered a <strong>LangChain-based Agent</strong> translating CV outputs into robotic commands. To improve robustness and controllability, an action–task mapping dictionary is designed to constrain model outputs and reduce hallucinations. Through <strong> model fine-tuning, prompt engineering, few-shot learning, chain-of-thought prompting </strong>, and the constrained mapping layer, the system achieved 98% execution stability and a 57% reduction in end-to-end latency.
+              </p>
+            </div>
+            <div className="md:col-span-1">
+              <img
+                src="/experience/multimodal.png"
+                alt="System UI"
+                className="w-full rounded-xl border border-neutral-200 dark:border-neutral-800 shadow-sm"
+              />
+            </div>
+          </div>
+        </article>
+
+        {/* ================= Snowball ================= */}
+        <article className="relative /* 增加背景色和磨砂感 */
+  bg-white/50 dark:bg-black/40 
+  backdrop-blur-md 
+  /* 增加内边距让文字不贴边 */
+  p-6 md:p-8 
+  /* 圆角和极细边框增加精致感 */
+  rounded-3xl 
+  border border-white/30 dark:border-white/10 
+  shadow-sm">
+          <div className="absolute -left-[37px] top-1.5 w-4 h-4 rounded-full border-4 border-[var(--background)] bg-neutral-300 dark:bg-neutral-700" />
+          
+          <div className="flex flex-col gap-1 mb-4">
+            <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Snowball</h2>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+              <span className="font-semibold text-teal-600 dark:text-teal-400">Big Data Development Intern</span>
+              <span className="text-neutral-500 italic">Feb 2023 – May 2023 · Beijing, China</span>
+            </div>
+          </div>
+
+          <div className="md:col-span-2 space-y-4 text-neutral-700 dark:text-neutral-300">
+          <p>
+            Identified and corrected data integrity issues across 10 warehouse tables and 68 sensitive fields using SQL, while optimizing warehouse logic by removing redundant dependencies.
+          </p>
+
+          <p>Reviewed 211 ODS tables and 681 downstream tables, identifying two unnecessary dependencies and more than one hundred instances of redundant logic.</p>
+            </div>
+        </article>
+
+        {/* ================= Bianlifeng ================= */}
+        <article className="relative /* 增加背景色和磨砂感 */
+  bg-white/50 dark:bg-black/40 
+  backdrop-blur-md 
+  /* 增加内边距让文字不贴边 */
+  p-6 md:p-8 
+  /* 圆角和极细边框增加精致感 */
+  rounded-3xl 
+  border border-white/30 dark:border-white/10 
+  shadow-sm">
+          <div className="absolute -left-[37px] top-1.5 w-4 h-4 rounded-full border-4 border-[var(--background)] bg-neutral-300 dark:bg-neutral-700" />
+          
+          <div className="flex flex-col gap-1 mb-4">
+            <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Bianlifeng Technology</h2>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+              <span className="font-semibold text-teal-600 dark:text-teal-400">HRIS & Data Analytics Intern</span>
+              <span className="text-neutral-500 italic">June 2021 – Sept 2021 · Beijing, China</span>
+            </div>
+          </div>
+
+          <div className="md:col-span-2 space-y-4 text-neutral-700 dark:text-neutral-300">
+          <p>
+            Developed <strong>RPA workflows</strong> improving operational efficiency by 95% and processed large-scale employee data using SQL window functions for multi-department reporting. In one project, the system automatically extracted and exported information for more than 8,400 retired employees for Uber billing coverage.
+          </p>
+          <p>Conducted data analysis using SQL to extract information from the data warehouse and applied window functions to process and categorize employee work data, supporting recurring monthly reporting needs for more than 10 departments over multiple reporting cycles.</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  );
+}
