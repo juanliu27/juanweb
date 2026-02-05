@@ -18,183 +18,178 @@ export default function KeywordOrbitGraph() {
 
     const width = 900
     const height = 560
+    
+    // 1. Tooltip 初始化 (保持原样)
     const tooltip = d3
         .select("body")
         .append("div")
-        .attr("id", "keyword-tooltip")       // 👈 必须是 fixed
-        .style("left", "0px")            // 👈 初始化
-        .style("top", "0px")
+        .attr("id", "keyword-tooltip")
         .style("position", "fixed")   
         .style("z-index", "99999")    
         .style("background", "rgba(255,255,255,0.95)")   
         .style("border", "1px solid #e5e7eb")
-        .style("color", "#111827")
         .style("padding", "10px 12px")
-        .style("border-radius", "8px")
+        .style("border-radius", "12px")
         .style("pointer-events", "none")
-        .style("box-shadow", "0 4px 12px rgba(0,0,0,0.08)")
+        .style("box-shadow", "0 10px 25px rgba(0,0,0,0.1)")
         .style("opacity", 0)
 
-
-    // =========================
-    // 1. 数据转化（你的人类数据 → 可视化数据）
-    // =========================
     const { nodes, links } = buildKeywordNetwork(papers)
 
-    // =========================
-    // 2. SVG 初始化
-    // =========================
     const svg = d3
       .select(ref.current)
       .attr("viewBox", `0 0 ${width} ${height}`)
-      .attr("class", "w-full h-full")
+      .attr("class", "w-full h-full cursor-grab active:cursor-grabbing")
 
     svg.selectAll("*").remove()
+
+    // 核心改动：增加一个容器层，所有的缩放平移都作用在这个 g 上
+    const container = svg.append("g")
+
+    // =========================
+    // 2. 缩放逻辑 (Zoom)
+    // =========================
+    const zoom = d3.zoom<SVGSVGElement, unknown>()
+      .scaleExtent([0.5, 5]) // 缩放倍数范围
+      .on("zoom", (event) => {
+        container.attr("transform", event.transform)
+      })
+
+    svg.call(zoom)
 
     // =========================
     // 3. Force Simulation
     // =========================
     const simulation = d3
       .forceSimulation<KeywordNode>(nodes)
-      .force(
-        "link",
-        d3
-          .forceLink<KeywordNode, KeywordLink>(links)
-          .id((d) => d.id)
-          .distance(90)
-          .strength((d) => 0.2 + d.weight * 0.15)
-      )
-      .force("charge", d3.forceManyBody<KeywordNode>().strength(-140))
+      .force("link", d3.forceLink<KeywordNode, KeywordLink>(links).id(d => d.id).distance(100))
+      .force("charge", d3.forceManyBody<KeywordNode>().strength(-200)) // 稍微增强排斥力，防止重叠
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force(
-        "collision",
-        d3
-          .forceCollide<KeywordNode>()
-          .radius((d) => 10 + d.papers.length * 3)
-      )
+      .force("collision", d3.forceCollide<KeywordNode>().radius(d => 15 + d.papers.length * 3))
 
     // =========================
-    // 4. 关键词节点（一个 keyword 一个点）
+    // 4. 拖拽逻辑 (Drag)
     // =========================
-    const node = svg
+    function drag(simulation: d3.Simulation<KeywordNode, undefined>) {
+      function dragstarted(event: any) {
+        if (!event.active) simulation.alphaTarget(0.3).restart()
+        event.subject.fx = event.subject.x
+        event.subject.fy = event.subject.y
+      }
+
+      function dragged(event: any) {
+        event.subject.fx = event.x
+        event.subject.fy = event.y
+      }
+
+      function dragended(event: any) {
+        if (!event.active) simulation.alphaTarget(0)
+        event.subject.fx = null
+        event.subject.fy = null
+      }
+
+      return d3.drag<any, any>()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended)
+    }
+
+    // =========================
+    // 5. 渲染元素 (挂载到 container 上)
+    // =========================
+    const node = container
       .append("g")
       .selectAll("circle")
       .data(nodes)
       .enter()
       .append("circle")
-      .attr("r", (d) => 5 + Math.sqrt(d.papers.length) * 6)
+      .attr("r", (d) => 6 + Math.sqrt(d.papers.length) * 6)
       .attr("fill", "#7dd3fc")
-      .attr("opacity", 0.85)
+      .attr("stroke", "white")
+      .attr("stroke-width", 2)
+      .attr("opacity", 0.9)
+      .style("cursor", "pointer")
+      .call(drag(simulation) as any) // 绑定拖拽
 
-    // =========================
-    // 5. 关键词文字
-    // =========================
-    const label = svg
+    const label = container
       .append("g")
       .selectAll("text")
       .data(nodes)
       .enter()
       .append("text")
       .text((d) => d.label)
-      .attr("font-size", "11px")
+      .attr("font-size", "12px")
+      .attr("font-weight", "500")
       .attr("fill", "#0369a1")
       .attr("text-anchor", "middle")
-      .attr("dy", -12)
+      .attr("dy", -15)
       .style("pointer-events", "none")
 
     // =========================
-    // 6. Hover：共享论文高亮
+    // 6. Hover：位置计算更新 (因为有了 Zoom，坐标需要转换)
     // =========================
     node
-        .on("mouseenter", function (event, d) {
+      .on("mouseenter", function (event, d) {
+        d3.select(this).transition().duration(200).attr("r", (d:any) => 8 + Math.sqrt(d.papers.length) * 6).attr("fill", "#0ea5e9")
+        
+        node.attr("opacity", (n) => sharesPaper(d, n) ? 1 : 0.15)
+        label.attr("opacity", (n) => sharesPaper(d, n) ? 1 : 0.1)
 
-            d3.select(this)
-            .attr("stroke", "#0369a1")
-            .attr("stroke-width", 2)
+        tooltip.html(`
+          <div style="
+            font-size:17px;
+            font-weight:600;
+            margin-bottom:6px;
+            color:#111827;
+          ">
+            ${d.label}
+          </div>
+        
+          <div style="
+            font-size:12px;
+            color:#6b7280;
+            margin-bottom:6px;
+          ">
+            Appears in (${d.papers.length} paper${d.papers.length > 1 ? "s" : ""})
+          </div>
+        
+          <ul style="
+            padding-left:16px;
+            margin:0;
+            font-size:14px;
+            color:#111827;
+          ">
+            ${d.papers
+              .map(
+                (p) => `
+                  <li style="margin-bottom:3px; line-height:1.2;">
+                    ${p.title}
+                  </li>
+                `
+              )
+              .join(";")}
+          </ul>
+        `)
+        .style("opacity", 1)
+      })
+      .on("mousemove", function(event) {
+        // Tooltip 跟随鼠标
+        tooltip
+          .style("left", `${event.clientX + 20}px`)
+          .style("top", `${event.clientY + 20}px`)
+      })
+      .on("mouseleave", function () {
+        d3.select(this).transition().duration(200).attr("r", (d:any) => 6 + Math.sqrt(d.papers.length) * 6).attr("fill", "#7dd3fc")
+        node.attr("opacity", 0.9)
+        label.attr("opacity", 1)
+        tooltip.style("opacity", 0)
+      })
 
-            node.attr("opacity", (n) =>
-            sharesPaper(d, n) ? 0.9 : 0.1
-            )
-            label.attr("opacity", (n) =>
-            sharesPaper(d, n) ? 1 : 0.1
-            )
-
-            const svgRect = ref.current!.getBoundingClientRect()
-
-            const left = svgRect.left + (d.x ?? 0) + 70
-            const top  = svgRect.top  + (d.y ?? 0) + 30
-
-            tooltip.html(`
-                <div style="
-                  font-size:17px;
-                  font-weight:600;
-                  margin-bottom:6px;
-                  color:#111827;
-                ">
-                  ${d.label}
-                </div>
-              
-                <div style="
-                  font-size:12px;
-                  color:#6b7280;
-                  margin-bottom:6px;
-                ">
-                  Appears in (${d.papers.length} paper${d.papers.length > 1 ? "s" : ""})
-                </div>
-              
-                <ul style="
-                  padding-left:16px;
-                  margin:0;
-                  font-size:14px;
-                  color:#111827;
-                ">
-                  ${d.papers
-                    .map(
-                      (p) => `
-                        <li style="margin-bottom:3px; line-height:1.2;">
-                          ${p.title}
-                        </li>
-                      `
-                    )
-                    .join("")}
-                </ul>
-              `)
-            .style("left", `${left}px`)
-            .style("top", `${top}px`)
-            .transition()
-            .duration(150)
-            .style("opacity", 1)
-        })
-
-        .on("mouseleave", function () {
-            d3.select(this).attr("stroke", "none")
-
-            node.attr("opacity", 0.85)
-            label.attr("opacity", 1)
-
-            tooltip
-            .transition()
-            .duration(150)
-            .style("opacity", 0)
-        })
-
-
-    // =========================
-    // 7. Tick：位置更新
-    // =========================
     simulation.on("tick", () => {
-      node
-        .attr("cx", (d) => d.x ?? 0)
-        .attr("cy", (d) => d.y ?? 0)
-
-      label
-        .attr("x", (d) => d.x ?? 0)
-        .attr("y", (d) => d.y ?? 0)
+      node.attr("cx", d => d.x!).attr("cy", d => d.y!)
+      label.attr("x", d => d.x!).attr("y", d => d.y!)
     })
 
-    // =========================
-    // 8. Cleanup（⚠️ 这是必须的）
-    // =========================
     return () => {
       simulation.stop()
       tooltip.remove()
@@ -202,15 +197,12 @@ export default function KeywordOrbitGraph() {
   }, [])
 
   return (
-    <div className="w-full h-[560px] rounded-xl bg-neutral-50 dark:bg-neutral-900">
-      <svg ref={ref} />
+    <div className="w-full h-[560px] relative overflow-hidden bg-white/40 dark:bg-neutral-900/40 backdrop-blur-md rounded-3xl border border-white/20">
+      <svg ref={ref} className="w-full h-full" />
     </div>
   )
 }
 
-/**
- * 判断两个 keyword 是否至少共享一篇论文
- */
 function sharesPaper(a: KeywordNode, b: KeywordNode) {
   if (a === b) return true
   const set = new Set(a.papers.map((p) => p.doi))

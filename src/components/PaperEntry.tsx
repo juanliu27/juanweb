@@ -1,8 +1,10 @@
 import React from "react"
+import Link from "next/link"
 import type { papers } from "@/app/data/papers"
 
 export default function PaperEntry({ paper }: { paper: papers }) {
   return (
+    <Link href={`${paper.link}`} className="block">
     <article className="space-y-2">
 
       {/* Title */}
@@ -24,17 +26,35 @@ export default function PaperEntry({ paper }: { paper: papers }) {
       {paper.notes?.myNotes && (
         <div className="mt-2 space-y-2 text-sm text-neutral-700">
           {paper.notes.myNotes.map((line, i) => {
-            const isItalic = line.startsWith("*") && line.endsWith("*")
-            const text = isItalic ? line.slice(1, -1) : line
+  const isBold =
+    line.startsWith("**") && line.endsWith("**")
 
-            return (
-              <p key={i} className={isItalic ? "italic text-neutral-600" : ""}>
-                {text}
-              </p>
-            )
-          })}
+  const isItalic =
+    !isBold &&
+    line.startsWith("*") &&
+    line.endsWith("*")
+
+  let text = line
+  if (isBold) text = line.slice(2, -2)
+  else if (isItalic) text = line.slice(1, -1)
+
+  return (
+    <p
+      key={i}
+      className={[
+        isBold && "font-semibold text-neutral-800 dark:text-neutral-200",
+        isItalic && "italic text-neutral-600 dark:text-neutral-400",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      {text}
+    </p>
+  )
+})}
         </div>
       )}
     </article>
+    </Link>
   )
 }
